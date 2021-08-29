@@ -1,0 +1,125 @@
+DATATABLES in COS
+-------------------------------------------------------------------------------------
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+SET time_zone = "+00:00";
+-------------------------------------------------------------------------------------
+Table for messageType_T
+-------------------------------------------------------------------------------------
+CREATE TABLE `messageType_T` (
+`messageType_id` INT(11) NOT NULL,
+`messageType_title` VARCHAR(30) NOT NULL,
+`messageType_info` VARCHAR(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `messageType_T` (`messageType_id`, `messageType_title`, `messageType_info`) VALUES
+( 1 , ‘ urgent ‘, ‘ message that needs an alert sent to receiver email ‘),
+( 2 , ‘ normal ‘ , ‘ no need to send email alert ‘ );
+
+-------------------------------------------------------------------------------------
+Table for messageStatus_T
+-------------------------------------------------------------------------------------
+CREATE TABLE `messageStatus_T` (
+`messageStatus_id` INT(11) NOT NULL,
+`messageStatus_title` VARCHAR(30) NOT NULL,
+`messageStatus_info` VARCHAR(200),
+PRIMARY KEY(`messageStatus_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO ‘messageStatus_T’ VALUES (`messageStatus_id`, `messageStatus_title`,
+`messageStatus_info`) VALUES
+( 1, ‘new’, ‘ new message that is not read yet’),
+( 2, ‘read’, ‘ message that has been read’),
+( 3, ‘deleted’, ‘not visible any more’);
+
+--------------------------------------------------------------------------------------
+Table for message_T
+--------------------------------------------------------------------------------------
+CREATE TABLE `message_T` (
+`message_id` INT(11) NOT NULL,
+`message_type` INT(11) NOT NULL DEFAULT '2',
+`messageStatus_id` INT(11) NOT NULL DEFAULT '1',
+`task_id` INT(10) NOT NULL,
+`message_sender` INT(11) NOT NULL,
+`message_receiver` INT(11) NOT NULL,
+`message_subject` VARCHAR(200) NOT NULL,
+`message_contents` longtext NOT NULL,
+`message_datalink` INT(10) AUTO_INCREMENT,
+`message_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO ‘message_T’ (`message_id`, `message_type`, `message_status`, `task_id`, `message_sender`,
+`message_receiver`, `message_subject`, `message_contents`, `message_created`) VALUES
+(000001, 2, 2, 0001, 002, 004, ‘hi’, ‘let’s have first meeting on Monday at 10am’, 0, 2019-01-20
+05:10:28),
+(000002, 1, 2, 0002, 007, 003, ‘start’, ‘can you review this form?’, 0105, 2019-01-20 09:13:07),
+(000003, 2, 1, 0001, 004, 002, ‘Re:hi’, ‘ok’, 0, 2019-01-20 19:13:07);
+
+------------------------------------------------------------------------------------------
+Table for `user_t`
+------------------------------------------------------------------------------------------
+CREATE TABLE `user_t` (
+ `user_id` INT(11) NOT NULL,
+ `userRole_id` INT(11) NOT NULL,
+ `user_loginName` VARCHAR(50) DEFAULT NULL,
+ `user_pass` VARCHAR(30) NOT NULL,
+ `user_fullName` VARCHAR(30) DEFAULT NULL,
+ `user_email` VARCHAR(50) NOT NULL,
+ `user_info` LONGTEXT,
+ `userStatus_id` INT(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `user_t` (`user_id`, `userRole_id`, `user_loginName`, `user_pass`, `user_fullName`,
+`user_email`, `user_info`, `userStatus_id`) VALUES
+(1, 1, '001', 'u0', 'n0', 'e0', 'i0', 1),
+(2, 2, '002', 'u1', 'n1', 'e1', 'i1', 1),
+(3, 2, '003', 'u2', 'n2', 'e2', 'i2', 1),
+(4, 3, '004', 'u3', 'n3', 'e3', 'i3', 1),
+(5, 3, '005', 'u4', 'n4', 'e4', 'i4', 1),
+(6, 4, '006', 'u5', 'n5', 'e5', 'i5', 1),
+(7, 4, '007', 'u6', 'n6', 'e6', 'i6', 1),
+(8, 4, '008', 'u7', 'n7', 'e7', 'i7', 1);
+
+--------------------------------------------------------------------------------------------
+Table for `userrole_t`
+--------------------------------------------------------------------------------------------
+CREATE TABLE `userrole_t` (
+ `userRole_id` int(11) NOT NULL,
+ `userRole_title` varchar(30) NOT NULL,
+ `userRole_info` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `userrole_t` (`userRole_id`, `userRole_title`, `userRole_info`) VALUES
+(1, 'Admin', 'Person with highest access rights'),
+(2, 'Manager', 'Leader of a group or division of the company'),
+(3, 'Staff', 'Member of a group or division of the company'),
+(4, 'Customer', 'Customer of the company'),
+(5, 'Public', 'Anyone who is not login-ed'),
+(6, 'Any', 'Any of the above');
+---------------------------------------------------------------------------------------------
+
+ALTER TABLE `messagestatus_t`
+ ADD PRIMARY KEY (`messageStatus_id`);
+
+ALTER TABLE `messagetype_t`
+ ADD PRIMARY KEY (`messageType_id`);
+
+ALTER TABLE `message_t`
+ ADD PRIMARY KEY (`message_id`);
+
+ALTER TABLE `userrole_t`
+ ADD PRIMARY KEY (`userRole_id`);
+
+ALTER TABLE `user_t`
+ ADD PRIMARY KEY (`user_id`);
+
+ALTER TABLE `messagestatus_t`
+ MODIFY `messageStatus_id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `messagetype_t`
+ MODIFY `messageType_id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `message_t`
+ MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;COMMIT;
