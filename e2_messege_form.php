@@ -34,3 +34,4 @@ include('database/database_connection.php');
               </div>
               
             </form>
+            <!--Message form working-->
