@@ -28,7 +28,7 @@ $query="insert into message_t(message_sender,message_receiver,message_subject,me
 
 $result=mysqli_query($connection,$query);
 
-
+//something changes
 
 if($result){
 
