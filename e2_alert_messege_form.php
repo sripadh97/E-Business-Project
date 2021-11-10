@@ -32,6 +32,6 @@ include('database/database_connection.php');
               <div class="form-group">
                 <input  class="btn btn-primary" type="submit" name="submit" value="Send Message"/>
               </div>
-              
+               </html>
             </form>
             
